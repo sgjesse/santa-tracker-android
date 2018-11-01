@@ -5,11 +5,6 @@
 -dontskipnonpubliclibraryclasses
 -verbose
 
-# Optimization is turned off by default. Dex does not like code run
-# through the ProGuard optimize and preverify steps (and performs some
-# of these optimizations on its own).
--dontoptimize
--dontpreverify
 # Note that if you want to enable optimization, you cannot just
 # include optimization flags in your own project configuration file;
 # instead you will need to point to the
@@ -103,7 +98,6 @@
 -dontwarn com.google.android.gms.**
 
 # Called by native code (in snowdown)
--dontobfuscate
 -keep class com.google.fpl.** { *; }
 -keep class com.google.android.gms.games.** { *; }
 -keep class com.google.android.gms.nearby.** { *; }
@@ -120,3 +114,5 @@
 -dontwarn javax.inject.**
 -dontwarn sun.misc.Unsafe
 
+# ORM
+-keep class ** extends com.orm.SugarRecord { *; }

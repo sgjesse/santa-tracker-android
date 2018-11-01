@@ -17,7 +17,6 @@
 #}
 
 # Called by native code
--dontobfuscate
 -keep class com.google.fpl.** { *; }
 -keep class com.google.android.gms.games.** { *; }
 -keep class com.google.android.gms.nearby.** { *; }
