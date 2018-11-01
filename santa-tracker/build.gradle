@@ -28,8 +28,11 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.txt'
+            signingConfig signingConfigs.debug
         }
     }
+
+
 
     flavorDimensions 'default'
     productFlavors {
