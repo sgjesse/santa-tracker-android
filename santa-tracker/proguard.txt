@@ -115,4 +115,7 @@
 -dontwarn sun.misc.Unsafe
 
 # ORM
--keep class ** extends com.orm.SugarRecord { *; }
+-keep class ** extends com.orm.SugarRecord { <fields>; }
+# This rule shouldn't be neccesary, but currently is with R8.
+# The rule above should already keep this field.
+-keep class com.orm.SugarRecord { <fields>; }
