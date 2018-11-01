@@ -5,7 +5,6 @@ ext.abiList = ['armeabi', 'armeabi-v7a', 'x86']
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.tools
 
     defaultConfig {
         applicationId "com.google.android.apps.santatracker"
@@ -32,10 +31,13 @@ android {
         }
     }
 
+    flavorDimensions 'default'
     productFlavors {
         production {
+            dimension 'default'
         }
         development {
+            dimension 'default'
         }
     }
 
@@ -70,6 +72,12 @@ android {
             include(*densityList)
             compatibleScreens 'small', 'normal', 'large', 'xlarge'
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    packagingOptions {
+        pickFirst 'lib/armeabi-v7a/libvrtoolkit.so'
     }
 }
 // Apply signing configurations, keys and other non-version-controlled things
