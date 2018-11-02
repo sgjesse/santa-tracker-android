@@ -48,5 +48,12 @@ These results do not necessarily carry over to other projects. Therefore, please
 Time
 ---
 
+![graph comparing R8 and Proguard build speed](benchmarks/graphs/shrinking-and-dexing-time.png)
+
 Size
 ---
+
+![graph comparing dex file size of R8 and Proguard builds](benchmarks/graphs/dex-file-size.png)
+
+![graph comparing apk file size of R8 and Proguard builds](benchmarks/graphs/apk-file-size.png)
+
