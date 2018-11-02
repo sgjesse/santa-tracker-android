@@ -41,7 +41,7 @@ The one R8 task does shrinking, dexing and dex-merging in one step.
 Results
 ---
 
-This section contains the benchmarking results. On this benchmark R8 takes 45% less time than Proguard and produces slightly smaller output both in compat and full mode.
+This section contains the [benchmarking results](benchmarks/data/data.csv). On this benchmark R8 takes 45% less time than Proguard and produces slightly smaller output both in compat and full mode.
 
 These results do not necessarily carry over to other projects. Therefore, please report issues in the R8 public issue tracker if your app gets larger or takes longer to process with R8 compared to Proguard.
 
