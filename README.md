@@ -1,65 +1,52 @@
-Google Santa Tracker for Android
-================================
+Comparing R8 and Proguard on Google Santa Tracker for Android
+===
 
-## About
+Setup
+---
 
-[Google Santa Tracker app for Android][play-store] is an educational and entertaining tradition that brings joy to millions of children (and children at heart) across the world over the December holiday period. The app is a companion to the [Google Santa Tracker][santa-web] website ([repository here](https://github.com/google/santa-tracker-web)), showcasing unique platform capabilities like Android Wear watchfaces, device notifications and more.
-![Analytics](https://ga-beacon.appspot.com/UA-12846745-20/santa-tracker-android/readme?pixel)
+Santa Tracker is an old sample and in order to properly run the evaluation we updated the project to use the 3.3-beta01 Android Gradle Plugin. In addition, the Santa Tracker proguard configuration was less than ideal. In particular, it told both Proguard and R8 to not optimize and to not obfuscate. We fixed that as well and added the keep rules needed to make the app still work.
 
-<img src="res/village.png" height="640" width="360" alt="Village Screenshot" />
+The result of these changes is in the santa tracker fork at: https://github.com/madsager/santa-tracker-android which is what has been used for the measurements.
 
-## Features
+Benchmarking
+---
 
-* A beautiful materially designed village
-* Exciting games like Penguin Swim and Rocket Sleigh
-* Interactive Android Wear watchfaces (with sound!)
-* Videos, animations and more.
+The benchmark results were obtained by using the following steps:
 
-## Building the app
+```
+./gradlew clean
+./gradlew --stop
+./gradlew :santa-tracker:assembleRelease &&
+./gradlew clean &&
+./gradlew :santa-tracker:assembleRelease &&
+./gradlew clean &&
+./gradlew :santa-tracker:assembleRelease --profile
+```
 
-First up, Santa Tracker is powered by [Firebase][firebase], so you'll need to enable it
-on your Google account over at the [Firebase console][fire-console]. Once you're in the
-console, follow these steps:
+We repeat the build in order to warm up the gradle daemon to get to a typical stable state. On the last run we use --profile which will report timings. The times that we collect are for shrinking and dexing (which with R8 is one step).
 
- * Create a new project
- * Add Firebase to your Android app
-  * Package name: `com.google.android.apps.santatracker.debug`
-  * Debug signing certificate can be blank, or follow the instructions in the
-    tooltip to find yours.
- * Save the `google-services.json` file to the `santa-tracker/` directory
+We did the above steps 5 times for each setting: Proguard, R8 compat mode and R8 full mode and the numbers reported is the average of the 5 runs.
 
-Now you should be able to plug your phone in (or fire up an emulator) and run:
+Concretely we measure the time for the following tasks:
 
-    ./gradlew santa-tracker:installDevelopmentDebug
+- R8
+    - :santa-tracker:transformClassesAndResourcesWithR8ForProductionRelease
+- Proguard
+    - :santa-tracker:transformClassesAndResourcesWithProguardForProductionRelease
+    - :santa-tracker:transformDexArchiveWithDexMergerForProductionRelease	
+    - :santa-tracker:transformClassesWithDexBuilderForProductionRelease	
 
-Alternatively, import the source code into Android Studio (File, Import Project).
+The one R8 task does shrinking, dexing and dex-merging in one step.
 
-Note: You'll need Android SDK version 24, build tools 24.0.0, and the Android Support Library to
-compile the project. If you're unsure about this, use Android Studio and tick the appropriate boxes
-in the SDK Manager.
+Results
+---
 
-## License
-All image and audio files (including *.png, *.jpg, *.svg, *.mp3, *.wav
-and *.ogg) are licensed under the CC-BY-NC license. All other files are
-licensed under the Apache 2 license. See the LICENSE file for details.
+This section contains the benchmarking results. On this benchmark R8 takes 45% less time than Proguard and produces slightly smaller output both in compat and full mode.
 
+These results do not necessarily carry over to other projects. Therefore, please report issues in the R8 public issue tracker if your app gets larger or takes longer to process with R8 compared to Proguard.
 
-    Copyright 2016 Google Inc. All rights reserved.
+Time
+---
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
-
-[play-store]: https://play.google.com/store/apps/details?id=com.google.android.apps.santatracker
-[santa-web]: http://g.co/santatracker
-[firebase]: https://firebase.google.com/
-[fire-console]: https://firebase.google.com/console/
+Size
+---
