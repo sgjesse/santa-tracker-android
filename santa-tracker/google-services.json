@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "522013327550",
+    "firebase_url": "https://sgjesse-santa-tracker.firebaseio.com",
+    "project_id": "sgjesse-santa-tracker",
+    "storage_bucket": "sgjesse-santa-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522013327550:android:e45ed345bccf664c",
+        "android_client_info": {
+          "package_name": "com.google.android.apps.santatracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522013327550-n11nggm7kv2ajbj7sma4sruj52hbj700.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1MZAs7j9pnchm8WhdwezkcZIk1TLiIkc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
